@@ -21,9 +21,6 @@ modules:
 - id: HFUT-WDR/DmImu
   repo: https://github.com/HFUT-WDR/DmImu.git
   status: community
-- id: HFUT-WDR/DualYaw
-  repo: https://github.com/HFUT-WDR/DualYaw.git
-  status: community
 - id: HFUT-WDR/EventBinder
   repo: https://github.com/HFUT-WDR/EventBinder.git
   status: community
@@ -44,9 +41,6 @@ modules:
   status: community
 - id: HFUT-WDR/Motor
   repo: https://github.com/HFUT-WDR/Motor.git
-  status: community
-- id: HFUT-WDR/Pitch
-  repo: https://github.com/HFUT-WDR/Pitch.git
   status: community
 - id: HFUT-WDR/PowerControl
   repo: https://github.com/HFUT-WDR/PowerControl.git
