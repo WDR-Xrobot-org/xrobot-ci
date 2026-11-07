@@ -1,7 +1,13 @@
 namespace: HFUT-WDR
 modules:
+- id: HFUT-WDR/BMI088
+  repo: https://github.com/HFUT-WDR/BMI088.git
+  status: community
 - id: HFUT-WDR/BoardAttitude
   repo: https://github.com/HFUT-WDR/BoardAttitude.git
+  status: community
+- id: HFUT-WDR/BuzzerAlarm
+  repo: https://github.com/HFUT-WDR/BuzzerAlarm.git
   status: community
 - id: HFUT-WDR/CMD
   repo: https://github.com/HFUT-WDR/CMD.git
