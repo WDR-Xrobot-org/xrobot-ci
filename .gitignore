@@ -2,3 +2,12 @@ __pycache__/
 *.pyc
 .venv/
 .cache/
+
+# IDE 与调试器的个人配置，不入库
+.vscode/
+.settings/
+.idea/
+*.code-workspace
+*.jdebug
+*.jdebug.user
+config/ozoneConfig/
