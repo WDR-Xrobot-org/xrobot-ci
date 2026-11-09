@@ -16,7 +16,7 @@
 - 在 `xrobot-ci` 配置 `WDR_SYNC_APP_ID`、`WDR_SYNC_APP_PRIVATE_KEY`（App 私钥）和 `WDR_MODULES_READ_TOKEN`（要分发的值）；
 - 手动运行或每日定时触发，脚本遍历 App 安装覆盖的仓库并写入 Secret。
 
-App 安装到组织后，新建仓库自动出现在安装范围内，下一次同步即可通过 CI；也可手动 dispatch 立即同步。未通过 `--dry_run` 前建议先空跑核对仓库列表。
+App 安装到组织后，新建仓库自动出现在安装范围内，下一次同步即可通过 CI；也可手动 dispatch 立即同步。同步脚本只写入 `.github/workflows/*.yml` 中引用了 `HFUT-WDR/xrobot-ci` 或显式使用 `WDR_MODULES_READ_TOKEN` 的仓库，非 XRobot 仓库不会被写入；未匹配但确实需要的仓库可用 `extra_repos` 输入补充。未通过 `--dry_run` 前建议先空跑核对仓库列表。
 
 工作流依据xrobot-org/XRobot的v1共享工作流维护，原始来源：
 https://github.com/xrobot-org/XRobot/tree/v1/.github/workflows

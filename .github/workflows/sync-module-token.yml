@@ -24,6 +24,10 @@ on:
         description: 只列出将更新的仓库，不写入
         type: boolean
         default: false
+      extra_repos:
+        description: 额外同步的仓库（逗号分隔，owner/repo），用于未匹配到 WDR CI 但确实需要的仓库
+        type: string
+        default: ''
   schedule:
     # 每天一次兜底；新仓库可手动触发立即同步。
     - cron: '17 2 * * *'
@@ -56,4 +60,5 @@ jobs:
           SYNC_VALUE: ${{ secrets.WDR_MODULES_READ_TOKEN }}
           SYNC_ORG: HFUT-WDR
           SYNC_DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
+          SYNC_EXTRA_REPOS: ${{ inputs.extra_repos }}
         run: python3 ci/sync_module_token.py
