@@ -1,0 +1,59 @@
+# 组织模块令牌同步
+#
+# 把 WDR_MODULES_READ_TOKEN 分发到 HFUT-WDR 下所有仓库，避免每新建一个仓库
+# 都要手工配置 Secret。使用组织 GitHub App 的安装令牌调用
+# GET /installation/repositories，安装覆盖范围包含新建仓库，因此新仓库会自动
+# 纳入下一次同步。
+#
+# 需要的 App 权限：
+#   Contents: read                 读取组织仓库列表（被安装仓库）
+#   Secrets: write                 写入仓库 Actions Secret
+# 需要的仓库 Secret（本仓库 xrobot-ci）：
+#   WDR_MODULES_READ_TOKEN         要分发的只读令牌（访问私有模块与 xrobot-ci）
+#   WDR_SYNC_APP_ID                组织 App 的 App ID
+#   WDR_SYNC_APP_PRIVATE_KEY       组织 App 的私钥（PEM）
+#
+# 说明：installation token 只能访问 App 被安装的仓库；App 安装到组织并选择
+# "All repositories" 后，新建仓库自动纳入安装范围。
+name: 组织模块令牌同步
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 只列出将更新的仓库，不写入
+        type: boolean
+        default: false
+  schedule:
+    # 每天一次兜底；新仓库可手动触发立即同步。
+    - cron: '17 2 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 生成 App 安装令牌
+        id: token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.WDR_SYNC_APP_ID }}
+          private-key: ${{ secrets.WDR_SYNC_APP_PRIVATE_KEY }}
+          owner: HFUT-WDR
+
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: 安装 PyNaCl
+        run: python3 -m pip install --quiet pynacl
+
+      - name: 同步到组织内各仓库
+        env:
+          SYNC_TOKEN: ${{ steps.token.outputs.token }}
+          SYNC_VALUE: ${{ secrets.WDR_MODULES_READ_TOKEN }}
+          SYNC_ORG: HFUT-WDR
+          SYNC_DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
+        run: python3 ci/sync_module_token.py

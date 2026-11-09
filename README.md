@@ -5,7 +5,18 @@
 - `index.yaml`：17个组织自维护模块的仓库地址。
 - `.github/workflows/module-ci.yml`：Linux上解析依赖、生成仅编译不运行的构造调用，编译模块与依赖。
 - `.github/workflows/bsp-stm32-ci.yml`：检查生成文件、配置格式和锁文件，按BSP预设构建并提供固件产物。
+- `.github/workflows/sync-module-token.yml`：用组织 GitHub App 的安装令牌，把 `WDR_MODULES_READ_TOKEN` 分发到组织内所有仓库；新建仓库自动纳入下一次同步，无需逐个手工配置。
 - `ci/credential_helper.py`：仅为HFUT-WDR的HTTPS Git请求读取CI Secret；不将凭据写入配置或日志。
+
+## 组织令牌同步
+
+`WDR_MODULES_READ_TOKEN` 是仓库级 Secret，新建仓库默认没有，导致首次 CI 失败。同步工作流的做法：
+
+- 组织 owner 一次性创建 GitHub App 并安装到 HFUT-WDR（All repositories），授予 `Contents: read` 与 `Secrets: write`；
+- 在 `xrobot-ci` 配置 `WDR_SYNC_APP_ID`、`WDR_SYNC_APP_PRIVATE_KEY`（App 私钥）和 `WDR_MODULES_READ_TOKEN`（要分发的值）；
+- 手动运行或每日定时触发，脚本遍历 App 安装覆盖的仓库并写入 Secret。
+
+App 安装到组织后，新建仓库自动出现在安装范围内，下一次同步即可通过 CI；也可手动 dispatch 立即同步。未通过 `--dry_run` 前建议先空跑核对仓库列表。
 
 工作流依据xrobot-org/XRobot的v1共享工作流维护，原始来源：
 https://github.com/xrobot-org/XRobot/tree/v1/.github/workflows
