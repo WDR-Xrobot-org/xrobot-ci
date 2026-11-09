@@ -12,11 +12,11 @@
 
 `WDR_MODULES_READ_TOKEN` 是仓库级 Secret，新建仓库默认没有，导致首次 CI 失败。同步工作流的做法：
 
-- 组织 owner 一次性创建 GitHub App 并安装到 HFUT-WDR（All repositories），授予 `Contents: read` 与 `Secrets: write`；
+- 组织 owner 一次性创建 GitHub App 并安装到 HFUT-WDR（All repositories），授予 `Metadata: read` 与 `Secrets: write`；
 - 在 `xrobot-ci` 配置 `WDR_SYNC_APP_ID`、`WDR_SYNC_APP_PRIVATE_KEY`（App 私钥）和 `WDR_MODULES_READ_TOKEN`（要分发的值）；
-- 手动运行或每日定时触发，脚本遍历 App 安装覆盖的仓库并写入 Secret。
+- 手动运行或每日定时触发，脚本按 `index.yaml` 与 `ci/bsp-repositories.txt` 的清单写入 Secret。
 
-App 安装到组织后，新建仓库自动出现在安装范围内，下一次同步即可通过 CI；也可手动 dispatch 立即同步。同步脚本只写入 `.github/workflows/*.yml` 中引用了 `HFUT-WDR/xrobot-ci` 或显式使用 `WDR_MODULES_READ_TOKEN` 的仓库，非 XRobot 仓库不会被写入；未匹配但确实需要的仓库可用 `extra_repos` 输入补充。未通过 `--dry_run` 前建议先空跑核对仓库列表。
+新增模块仓库时把它加入 `index.yaml` 即可自动纳入；新增 BSP 仓库时在 `ci/bsp-repositories.txt` 加一行，并确认 App 安装范围包含它。若 App 安装范围为 All repositories，则新仓库无需再改安装设置。脚本不扫描仓库内容，也不会给清单外的仓库写入 Secret。未通过 `--dry_run` 前建议先空跑核对仓库列表。
 
 工作流依据xrobot-org/XRobot的v1共享工作流维护，原始来源：
 https://github.com/xrobot-org/XRobot/tree/v1/.github/workflows

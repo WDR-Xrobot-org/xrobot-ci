@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
-"""把模块只读令牌同步到组织内使用 WDR 共享 CI 的仓库。
+"""把模块只读令牌同步到 XRobot BSP 与模块仓库。
 
-由 GitHub App 的安装令牌驱动，组织内新建的仓库会自动出现在
-GET /installation/repositories 的返回中，无需逐个仓库手工配置。
+目标仓库来自两处显式清单，不扫描仓库内容，因此 App 只需 Metadata 与
+Secrets 权限：
 
-只对“确实需要令牌”的仓库写入 Secret：仓库的 .github/workflows/*.yml 中
-引用了 HFUT-WDR/xrobot-ci 或显式使用 WDR_MODULES_READ_TOKEN。非 XRobot
-仓库不会被写入，避免把凭据扩散到无关仓库。
+- index.yaml 中的 HFUT-WDR 模块；
+- ci/bsp-repositories.txt 中列出的 BSP 仓库。
 
-令牌值本身来自调用仓库的 WDR_MODULES_READ_TOKEN Secret，脚本只负责分发。
-可选 SYNC_EXTRA_REPOS 用逗号分隔补充未匹配但仍需同步的仓库。
+App 安装令牌只能访问安装范围内的仓库；目标不在安装范围内时逐个报告。
+可选 SYNC_EXTRA_REPOS 用逗号分隔补充仓库。
 """
 import base64
 import json
@@ -17,6 +16,7 @@ import os
 import sys
 import urllib.error
 import urllib.request
+from pathlib import Path
 
 API = "https://api.github.com"
 SECRET_NAME = "WDR_MODULES_READ_TOKEN"
@@ -26,8 +26,8 @@ VALUE = os.environ.get("SYNC_VALUE", "")
 DRY_RUN = os.environ.get("SYNC_DRY_RUN", "") == "1"
 EXTRA = {name.strip() for name in os.environ.get("SYNC_EXTRA_REPOS", "").split(",")
          if name.strip()}
-
-CI_MARKERS = ("HFUT-WDR/xrobot-ci", "WDR_MODULES_READ_TOKEN")
+INDEX = Path(os.environ.get("SYNC_INDEX", "index.yaml"))
+BSP_LIST = Path(os.environ.get("SYNC_BSP_LIST", "ci/bsp-repositories.txt"))
 
 
 def call(method, path, payload=None):
@@ -46,34 +46,43 @@ def call(method, path, payload=None):
     return json.loads(body) if body else None
 
 
+def index_repositories():
+    """从模块索引读取 owner/repo。索引只允许简单 YAML，按行解析即可。"""
+    if not INDEX.exists():
+        raise SystemExit(f"找不到模块索引 {INDEX}")
+    repos = set()
+    for line in INDEX.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line.startswith("- id:"):
+            module_id = line.split(":", 1)[1].strip()
+            if "/" in module_id and module_id.startswith(ORG + "/"):
+                repos.add(module_id)
+    return repos
+
+
+def bsp_repositories():
+    if not BSP_LIST.exists():
+        return set()
+    repos = set()
+    for line in BSP_LIST.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        repos.add(line)
+    return repos
+
+
 def installation_repositories():
-    """列出 App 安装覆盖的全部仓库，新仓库自动包含在内。"""
+    """列出 App 安装覆盖的全部仓库，用于判断目标是否在安装范围。"""
+    repos = set()
     page = 1
     while True:
         data = call("GET", f"/installation/repositories?per_page=100&page={page}")
         for repo in data.get("repositories", []):
-            yield repo
+            repos.add(repo["full_name"])
         if len(data.get("repositories", [])) < 100:
-            return
+            return repos
         page += 1
-
-
-def uses_wdr_ci(full_name):
-    """仓库是否调用 WDR 共享 CI：检查 workflow 文件内容。"""
-    try:
-        entries = call("GET", f"/repos/{full_name}/contents/.github/workflows")
-    except urllib.error.HTTPError as error:
-        if error.code == 404:
-            return False
-        raise
-    for entry in entries:
-        if entry.get("type") != "file" or not entry["name"].endswith((".yml", ".yaml")):
-            continue
-        content = call("GET", f"/repos/{full_name}/contents/{entry['path']}")
-        text = base64.b64decode(content["content"]).decode("utf-8", "replace")
-        if any(marker in text for marker in CI_MARKERS):
-            return True
-    return False
 
 
 def encrypt(public_key, secret_value):
@@ -88,19 +97,14 @@ def main():
     if not VALUE:
         raise SystemExit("调用仓库缺少 WDR_MODULES_READ_TOKEN，无法分发。")
 
+    targets = index_repositories() | bsp_repositories() | EXTRA
+    installed = installation_repositories()
+    print(f"目标仓库 {len(targets)} 个，App 安装覆盖 {len(installed)} 个")
+
     updated = skipped = failed = 0
-    for repo in installation_repositories():
-        full_name = repo["full_name"]
-        if repo.get("archived"):
-            print(f"SKIP {full_name}: 已归档")
-            skipped += 1
-            continue
-        if not full_name.startswith(ORG + "/"):
-            print(f"SKIP {full_name}: 不在 {ORG} 下")
-            skipped += 1
-            continue
-        if full_name not in EXTRA and not uses_wdr_ci(full_name):
-            print(f"SKIP {full_name}: 未使用 WDR 共享 CI")
+    for full_name in sorted(targets):
+        if full_name not in installed:
+            print(f"SKIP {full_name}: 不在 App 安装范围")
             skipped += 1
             continue
         try:

@@ -1,0 +1,4 @@
+# 使用 WDR BSP 共享 CI 的仓库，每行 owner/repo。
+# 新增 BSP 仓库时在这里加一行并重新运行同步工作流。
+HFUT-WDR/wdr_xrobot_dmmc02_framework
+HFUT-WDR/27_sentry
