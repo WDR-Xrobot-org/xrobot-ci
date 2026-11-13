@@ -1,59 +1,59 @@
-namespace: HFUT-WDR
+namespace: WDR-Xrobot-org
 modules:
-- id: HFUT-WDR/BMI088
-  repo: https://github.com/HFUT-WDR/BMI088.git
+- id: WDR-Xrobot-org/BMI088
+  repo: https://github.com/WDR-Xrobot-org/BMI088.git
   status: community
-- id: HFUT-WDR/BoardAttitude
-  repo: https://github.com/HFUT-WDR/BoardAttitude.git
+- id: WDR-Xrobot-org/BuzzerAlarm
+  repo: https://github.com/WDR-Xrobot-org/BuzzerAlarm.git
   status: community
-- id: HFUT-WDR/BuzzerAlarm
-  repo: https://github.com/HFUT-WDR/BuzzerAlarm.git
+- id: WDR-Xrobot-org/CMD
+  repo: https://github.com/WDR-Xrobot-org/CMD.git
   status: community
-- id: HFUT-WDR/CMD
-  repo: https://github.com/HFUT-WDR/CMD.git
+- id: WDR-Xrobot-org/Chassis
+  repo: https://github.com/WDR-Xrobot-org/Chassis.git
   status: community
-- id: HFUT-WDR/Chassis
-  repo: https://github.com/HFUT-WDR/Chassis.git
+- id: WDR-Xrobot-org/ControlAlgorithms
+  repo: https://github.com/WDR-Xrobot-org/ControlAlgorithms.git
   status: community
-- id: HFUT-WDR/ControlAlgorithms
-  repo: https://github.com/HFUT-WDR/ControlAlgorithms.git
+- id: WDR-Xrobot-org/DMMotor
+  repo: https://github.com/WDR-Xrobot-org/DMMotor.git
   status: community
-- id: HFUT-WDR/DMMotor
-  repo: https://github.com/HFUT-WDR/DMMotor.git
+- id: WDR-Xrobot-org/DR16
+  repo: https://github.com/WDR-Xrobot-org/DR16.git
   status: community
-- id: HFUT-WDR/DR16
-  repo: https://github.com/HFUT-WDR/DR16.git
+- id: WDR-Xrobot-org/EventBinder
+  repo: https://github.com/WDR-Xrobot-org/EventBinder.git
   status: community
-- id: HFUT-WDR/DmImu
-  repo: https://github.com/HFUT-WDR/DmImu.git
+- id: WDR-Xrobot-org/Gimbal
+  repo: https://github.com/WDR-Xrobot-org/Gimbal.git
   status: community
-- id: HFUT-WDR/EventBinder
-  repo: https://github.com/HFUT-WDR/EventBinder.git
+- id: WDR-Xrobot-org/HostData
+  repo: https://github.com/WDR-Xrobot-org/HostData.git
   status: community
-- id: HFUT-WDR/Gimbal
-  repo: https://github.com/HFUT-WDR/Gimbal.git
+- id: WDR-Xrobot-org/I6x
+  repo: https://github.com/WDR-Xrobot-org/I6x.git
   status: community
-- id: HFUT-WDR/HostData
-  repo: https://github.com/HFUT-WDR/HostData.git
+- id: WDR-Xrobot-org/Launcher
+  repo: https://github.com/WDR-Xrobot-org/Launcher.git
   status: community
-- id: HFUT-WDR/I6x
-  repo: https://github.com/HFUT-WDR/I6x.git
+- id: WDR-Xrobot-org/Motor
+  repo: https://github.com/WDR-Xrobot-org/Motor.git
   status: community
-- id: HFUT-WDR/ImuFusion
-  repo: https://github.com/HFUT-WDR/ImuFusion.git
+- id: WDR-Xrobot-org/PowerControl
+  repo: https://github.com/WDR-Xrobot-org/PowerControl.git
   status: community
-- id: HFUT-WDR/Launcher
-  repo: https://github.com/HFUT-WDR/Launcher.git
+- id: WDR-Xrobot-org/RMMotor
+  repo: https://github.com/WDR-Xrobot-org/RMMotor.git
   status: community
-- id: HFUT-WDR/Motor
-  repo: https://github.com/HFUT-WDR/Motor.git
+- id: WDR-Xrobot-org/Referee
+  repo: https://github.com/WDR-Xrobot-org/Referee.git
   status: community
-- id: HFUT-WDR/PowerControl
-  repo: https://github.com/HFUT-WDR/PowerControl.git
+- id: WDR-Xrobot-org/ImuFusion
+  repo: https://github.com/WDR-Xrobot-org/ImuFusion.git
   status: community
-- id: HFUT-WDR/RMMotor
-  repo: https://github.com/HFUT-WDR/RMMotor.git
+- id: WDR-Xrobot-org/BoardAttitude
+  repo: https://github.com/WDR-Xrobot-org/BoardAttitude.git
   status: community
-- id: HFUT-WDR/Referee
-  repo: https://github.com/HFUT-WDR/Referee.git
+- id: WDR-Xrobot-org/DmImu
+  repo: https://github.com/WDR-Xrobot-org/DmImu.git
   status: community

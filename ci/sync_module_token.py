@@ -4,7 +4,7 @@
 目标仓库来自两处显式清单，不扫描仓库内容，因此 App 只需 Metadata 与
 Secrets 权限：
 
-- index.yaml 中的 HFUT-WDR 模块；
+- index.yaml 中的 WDR-Xrobot-org 模块；
 - ci/bsp-repositories.txt 中列出的 BSP 仓库。
 
 App 安装令牌只能访问安装范围内的仓库；目标不在安装范围内时逐个报告。
@@ -20,7 +20,7 @@ from pathlib import Path
 
 API = "https://api.github.com"
 SECRET_NAME = "WDR_MODULES_READ_TOKEN"
-ORG = os.environ.get("SYNC_ORG", "HFUT-WDR")
+ORG = os.environ.get("SYNC_ORG", "WDR-Xrobot-org")
 TOKEN = os.environ["SYNC_TOKEN"]
 VALUE = os.environ.get("SYNC_VALUE", "")
 DRY_RUN = os.environ.get("SYNC_DRY_RUN", "") == "1"

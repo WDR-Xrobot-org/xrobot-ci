@@ -45,7 +45,7 @@ jobs:
         with:
           app-id: ${{ secrets.WDR_SYNC_APP_ID }}
           private-key: ${{ secrets.WDR_SYNC_APP_PRIVATE_KEY }}
-          owner: HFUT-WDR
+          owner: WDR-Xrobot-org
 
       - uses: actions/checkout@v4
         with:
@@ -58,7 +58,7 @@ jobs:
         env:
           SYNC_TOKEN: ${{ steps.token.outputs.token }}
           SYNC_VALUE: ${{ secrets.WDR_MODULES_READ_TOKEN }}
-          SYNC_ORG: HFUT-WDR
+          SYNC_ORG: WDR-Xrobot-org
           SYNC_DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
           SYNC_EXTRA_REPOS: ${{ inputs.extra_repos }}
         run: python3 ci/sync_module_token.py

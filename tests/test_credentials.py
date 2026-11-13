@@ -9,14 +9,14 @@ spec.loader.exec_module(helper)
 
 class CredentialScope(unittest.TestCase):
     def test_selected_organization(self):
-        self.assertIn('password=test-only', helper.credentials('protocol=https\nhost=github.com\npath=HFUT-WDR/Pitch.git\n', 'test-only'))
+        self.assertIn('password=test-only', helper.credentials('protocol=https\nhost=github.com\npath=WDR-Xrobot-org/Pitch.git\n', 'test-only'))
 
     def test_other_repositories_receive_no_secret(self):
-        for path in ['xrobot-org/libxr.git', 'YunMo-yanyu/Pitch.git', 'HFUT-WDR-other/Pitch.git']:
+        for path in ['xrobot-org/libxr.git', 'YunMo-yanyu/Pitch.git', 'WDR-Xrobot-org-other/Pitch.git']:
             self.assertEqual('', helper.credentials('protocol=https\nhost=github.com\npath=' + path, 'test-only'))
 
     def test_other_hosts_receive_no_secret(self):
-        self.assertEqual('', helper.credentials('protocol=https\nhost=example.com\npath=HFUT-WDR/Pitch.git', 'test-only'))
+        self.assertEqual('', helper.credentials('protocol=https\nhost=example.com\npath=WDR-Xrobot-org/Pitch.git', 'test-only'))
 
     def test_missing_token(self):
-        self.assertEqual('', helper.credentials('protocol=https\nhost=github.com\npath=HFUT-WDR/Pitch.git', ''))
+        self.assertEqual('', helper.credentials('protocol=https\nhost=github.com\npath=WDR-Xrobot-org/Pitch.git', ''))

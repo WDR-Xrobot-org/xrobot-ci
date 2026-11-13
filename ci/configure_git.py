@@ -7,7 +7,7 @@ import subprocess
 import sys
 
 if not os.environ.get('WDR_MODULES_READ_TOKEN'):
-    raise SystemExit('请为调用仓库配置WDR_MODULES_READ_TOKEN，只读访问HFUT-WDR模块和xrobot-ci。')
+    raise SystemExit('请为调用仓库配置WDR_MODULES_READ_TOKEN，只读访问WDR-Xrobot-org模块和xrobot-ci。')
 helper = Path(__file__).with_name('credential_helper.py').resolve()
 for key, value in [
     ('credential.useHttpPath', 'true'),

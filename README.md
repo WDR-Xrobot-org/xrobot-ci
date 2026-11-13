@@ -1,18 +1,18 @@
 # WDR XRobot CI 与模块源
 
-本仓库为HFUT-WDR私有模块提供统一索引和组织内共享CI。模块/框架私有仓库继承组织成员的读取权限；不公开代码。
+本仓库为WDR-Xrobot-org私有模块提供统一索引和组织内共享CI。模块/框架私有仓库继承组织成员的读取权限；不公开代码。
 
 - `index.yaml`：17个组织自维护模块的仓库地址。
 - `.github/workflows/module-ci.yml`：Linux上解析依赖、生成仅编译不运行的构造调用，编译模块与依赖。
 - `.github/workflows/bsp-stm32-ci.yml`：检查生成文件、配置格式和锁文件，按BSP预设构建并提供固件产物。
 - `.github/workflows/sync-module-token.yml`：用组织 GitHub App 的安装令牌，把 `WDR_MODULES_READ_TOKEN` 分发到组织内所有仓库；新建仓库自动纳入下一次同步，无需逐个手工配置。
-- `ci/credential_helper.py`：仅为HFUT-WDR的HTTPS Git请求读取CI Secret；不将凭据写入配置或日志。
+- `ci/credential_helper.py`：仅为WDR-Xrobot-org的HTTPS Git请求读取CI Secret；不将凭据写入配置或日志。
 
 ## 组织令牌同步
 
 `WDR_MODULES_READ_TOKEN` 是仓库级 Secret，新建仓库默认没有，导致首次 CI 失败。同步工作流的做法：
 
-- 组织 owner 一次性创建 GitHub App 并安装到 HFUT-WDR（All repositories），授予 `Metadata: read` 与 `Secrets: write`；
+- 组织 owner 一次性创建 GitHub App 并安装到 WDR-Xrobot-org（All repositories），授予 `Metadata: read` 与 `Secrets: write`；
 - 在 `xrobot-ci` 配置 `WDR_SYNC_APP_ID`、`WDR_SYNC_APP_PRIVATE_KEY`（App 私钥）和 `WDR_MODULES_READ_TOKEN`（要分发的值）；
 - 手动运行或每日定时触发，脚本按 `index.yaml` 与 `ci/bsp-repositories.txt` 的清单写入 Secret。
 
@@ -29,7 +29,7 @@ https://github.com/xrobot-org/XRobot/tree/v1/.github/workflows
 ```yaml
 jobs:
   build:
-    uses: HFUT-WDR/xrobot-ci/.github/workflows/module-ci.yml@dev
+    uses: WDR-Xrobot-org/xrobot-ci/.github/workflows/module-ci.yml@dev
     secrets:
       WDR_MODULES_READ_TOKEN: ${{ secrets.WDR_MODULES_READ_TOKEN }}
 ```
@@ -39,7 +39,7 @@ BSP调用同目录的`bsp-stm32-ci.yml@dev`，填写工程名、产品配置和D
 
 ## 私有依赖凭据
 
-在每个模块仓库及BSP仓库配置`WDR_MODULES_READ_TOKEN`。使用资源所有者为HFUT-WDR的专用Fine-grained Token，只选择当前19个仓库，赋予Contents Read-only；Metadata保持GitHub要求的Read-only。不要复用个人广泛读写令牌。
+在每个模块仓库及BSP仓库配置`WDR_MODULES_READ_TOKEN`。使用资源所有者为WDR-Xrobot-org的专用Fine-grained Token，只选择当前19个仓库，赋予Contents Read-only；Metadata保持GitHub要求的Read-only。不要复用个人广泛读写令牌。
 
 框架中的`tools/configure_wdr_ci.py`可隐藏输入一次并加密写入18个调用仓库的Actions Secrets；`--check`只检查Secret名称，不读取值。不要把Token提交到仓库或发到聊天中。
 
