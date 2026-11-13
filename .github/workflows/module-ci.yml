@@ -59,6 +59,12 @@ on:
         description: Per-test CTest timeout in seconds
         type: number
         default: 15
+      app-id:
+        # App ID 不是密钥，写进默认值，调用方就不必配置组织变量；
+        # 免费组织的组织级变量不能被私有仓库读取，放在 vars 里会解析成空串。
+        description: WDR GitHub App ID used to mint a read-only installation token
+        type: string
+        default: '5742076'
 
 permissions:
   contents: read
@@ -88,7 +94,7 @@ jobs:
         id: app
         uses: actions/create-github-app-token@v2
         with:
-          app-id: ${{ vars.WDR_APP_ID }}
+          app-id: ${{ inputs.app-id }}
           private-key: ${{ secrets.WDR_APP_PRIVATE_KEY }}
           owner: WDR-Xrobot-org
           # 不缩小到单个仓库：被测模块的依赖也在同一组织下，需按安装范围全部可读。

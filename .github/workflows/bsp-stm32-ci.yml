@@ -56,6 +56,12 @@ on:
         description: Configurations published on a release, one per line; empty publishes every configuration but default, or default when it is the only one
         type: string
         default: ''
+      app-id:
+        # App ID 不是密钥，写进默认值，调用方就不必配置组织变量；
+        # 免费组织的组织级变量不能被私有仓库读取，放在 vars 里会解析成空串。
+        description: WDR GitHub App ID used to mint a read-only installation token
+        type: string
+        default: '5742076'
       image:
         description: Build container image
         type: string
@@ -144,7 +150,7 @@ jobs:
         id: app
         uses: actions/create-github-app-token@v2
         with:
-          app-id: ${{ vars.WDR_APP_ID }}
+          app-id: ${{ inputs.app-id }}
           private-key: ${{ secrets.WDR_APP_PRIVATE_KEY }}
           owner: WDR-Xrobot-org
 
@@ -253,7 +259,7 @@ jobs:
         id: app
         uses: actions/create-github-app-token@v2
         with:
-          app-id: ${{ vars.WDR_APP_ID }}
+          app-id: ${{ inputs.app-id }}
           private-key: ${{ secrets.WDR_APP_PRIVATE_KEY }}
           owner: WDR-Xrobot-org
 
