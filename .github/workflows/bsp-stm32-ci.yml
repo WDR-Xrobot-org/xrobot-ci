@@ -170,6 +170,7 @@ jobs:
           persist-credentials: false
 
       - name: Configure module access
+        shell: bash
         run: |
           set -euo pipefail
           # 凭据由 helper 在运行时从环境变量取出，令牌不写进 git 配置或日志。
@@ -279,6 +280,7 @@ jobs:
           persist-credentials: false
 
       - name: Configure module access
+        shell: bash
         run: |
           set -euo pipefail
           # 凭据由 helper 在运行时从环境变量取出，令牌不写进 git 配置或日志。
