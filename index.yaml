@@ -60,3 +60,9 @@ modules:
 - id: WDR-Xrobot-org/DmAttitude
   repo: https://github.com/WDR-Xrobot-org/DmAttitude.git
   status: community
+- id: WDR-Xrobot-org/HostLink
+  repo: https://github.com/WDR-Xrobot-org/HostLink.git
+  status: community
+- id: WDR-Xrobot-org/rm_decision
+  repo: https://github.com/WDR-Xrobot-org/rm_decision.git
+  status: community
