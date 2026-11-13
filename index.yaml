@@ -57,3 +57,6 @@ modules:
 - id: WDR-Xrobot-org/DmImu
   repo: https://github.com/WDR-Xrobot-org/DmImu.git
   status: community
+- id: WDR-Xrobot-org/DmAttitude
+  repo: https://github.com/WDR-Xrobot-org/DmAttitude.git
+  status: community
