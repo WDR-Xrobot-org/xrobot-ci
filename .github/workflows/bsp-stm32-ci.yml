@@ -133,7 +133,6 @@ jobs:
           PYCODE
 
   check:
-    env:
     name: check
     runs-on: ubuntu-latest
     container:
