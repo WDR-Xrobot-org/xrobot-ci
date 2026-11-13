@@ -30,7 +30,12 @@ BSP调用同目录的`bsp-stm32-ci.yml@dev`，填写工程名、产品配置和D
 - 每次 job 由 `actions/create-github-app-token@v2` 铸造一小时有效的安装令牌，
   通过 `credential.helper` 从环境变量提供给 git，不写进配置、参数或日志。
 
-调用方只需要仓库级 Secret `WDR_APP_PRIVATE_KEY`（App 私钥 PEM）与组织或仓库级
-变量 `WDR_APP_ID`。免费组织的组织级 Secret 不能被私有仓库读取，所以私钥按仓库配置；
-新增仓库时补一次 Secret 即可，令牌本身无需轮换。
+调用方只需要仓库级 Secret `WDR_APP_PRIVATE_KEY`（App 私钥 PEM）。免费组织的组织级
+Secret 不能被私有仓库读取，所以私钥按仓库配置；App ID 已写成工作流输入默认值，
+不需要组织变量。新增仓库时补一次 Secret 即可，令牌本身无需轮换。
+
+本仓库为公开仓库：GitHub 免费版只允许同一组织内的私有可复用工作流互相调用，
+公开仓库则不限组织。索引里只有模块名与仓库地址，私有模块的代码仍在私有仓库中。
+`xrobot` 拉取这些模块时使用的是调用方 job 铸造的安装令牌，因此框架仓库
+（位于 HFUT-WDR）也能跨组织调用本仓库的工作流并读取私有模块。
 
