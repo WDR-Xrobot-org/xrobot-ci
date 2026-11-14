@@ -48,14 +48,11 @@ modules:
 - id: WDR-Xrobot-org/Referee
   repo: https://github.com/WDR-Xrobot-org/Referee.git
   status: community
-- id: WDR-Xrobot-org/ImuEkfFusion
-  repo: https://github.com/WDR-Xrobot-org/ImuEkfFusion.git
-  status: community
 - id: WDR-Xrobot-org/DmImu
   repo: https://github.com/WDR-Xrobot-org/DmImu.git
   status: community
-- id: WDR-Xrobot-org/AttitudeFusion
-  repo: https://github.com/WDR-Xrobot-org/AttitudeFusion.git
+- id: WDR-Xrobot-org/AttitudeEkf
+  repo: https://github.com/WDR-Xrobot-org/AttitudeEkf.git
   status: community
 - id: WDR-Xrobot-org/HostLink
   repo: https://github.com/WDR-Xrobot-org/HostLink.git
