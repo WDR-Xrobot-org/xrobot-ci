@@ -48,8 +48,8 @@ modules:
 - id: WDR-Xrobot-org/Referee
   repo: https://github.com/WDR-Xrobot-org/Referee.git
   status: community
-- id: WDR-Xrobot-org/ImuFusion
-  repo: https://github.com/WDR-Xrobot-org/ImuFusion.git
+- id: WDR-Xrobot-org/ImuEkfFusion
+  repo: https://github.com/WDR-Xrobot-org/ImuEkfFusion.git
   status: community
 - id: WDR-Xrobot-org/DmImu
   repo: https://github.com/WDR-Xrobot-org/DmImu.git
