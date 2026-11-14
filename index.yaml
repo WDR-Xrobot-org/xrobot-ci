@@ -52,10 +52,10 @@ modules:
   repo: https://github.com/WDR-Xrobot-org/DmImu.git
   status: community
 - id: WDR-Xrobot-org/AttitudeEkf
+  repo: https://github.com/WDR-Xrobot-org/AttitudeEkf.git
+  status: community
 - id: WDR-Xrobot-org/ESKF
   repo: https://github.com/WDR-Xrobot-org/ESKF.git
-  status: community
-  repo: https://github.com/WDR-Xrobot-org/AttitudeEkf.git
   status: community
 - id: WDR-Xrobot-org/HostLink
   repo: https://github.com/WDR-Xrobot-org/HostLink.git
