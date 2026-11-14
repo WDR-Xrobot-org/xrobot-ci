@@ -51,14 +51,11 @@ modules:
 - id: WDR-Xrobot-org/ImuFusion
   repo: https://github.com/WDR-Xrobot-org/ImuFusion.git
   status: community
-- id: WDR-Xrobot-org/BoardAttitude
-  repo: https://github.com/WDR-Xrobot-org/BoardAttitude.git
-  status: community
 - id: WDR-Xrobot-org/DmImu
   repo: https://github.com/WDR-Xrobot-org/DmImu.git
   status: community
-- id: WDR-Xrobot-org/DmAttitude
-  repo: https://github.com/WDR-Xrobot-org/DmAttitude.git
+- id: WDR-Xrobot-org/AttitudeFusion
+  repo: https://github.com/WDR-Xrobot-org/AttitudeFusion.git
   status: community
 - id: WDR-Xrobot-org/HostLink
   repo: https://github.com/WDR-Xrobot-org/HostLink.git
