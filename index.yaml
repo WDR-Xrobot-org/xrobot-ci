@@ -63,3 +63,6 @@ modules:
 - id: WDR-Xrobot-org/rm_decision
   repo: https://github.com/WDR-Xrobot-org/rm_decision.git
   status: community
+- id: WDR-Xrobot-org/ThreeFricLauncher
+  repo: https://github.com/WDR-Xrobot-org/ThreeFricLauncher.git
+  status: community
