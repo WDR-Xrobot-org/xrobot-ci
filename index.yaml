@@ -72,3 +72,7 @@ modules:
 - id: WDR-Xrobot-org/Identify
   repo: https://github.com/WDR-Xrobot-org/Identify.git
   status: community
+
+- id: WDR-Xrobot-org/VQFAHRS
+  repo: https://github.com/WDR-Xrobot-org/VQFAHRS.git
+  status: community
